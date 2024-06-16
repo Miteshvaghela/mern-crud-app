@@ -44,7 +44,7 @@ app.delete('/products/:id', async (req, res) => {
     const oldImagePath = __dirname + '/uploads/' + oldProduct.image; 
     try{
         if(fs.existsSync(oldImagePath)){
-            await  fs.unlinkSync(oldImagePath, (err) => {
+            await  fs.unlink(oldImagePath, (err) => {
                 console.error(err);
             })
         }
@@ -102,7 +102,7 @@ app.put('/products/:id', async (req, res) => {
 
             try{
                 if(fs.existsSync(oldImagePath)){
-                    await  fs.unlinkSync(oldImagePath, (err) => {
+                    await  fs.unlink(oldImagePath, (err) => {
                         console.error(err);
                     })
                 }
