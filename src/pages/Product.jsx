@@ -53,11 +53,12 @@ const Product = () => {
         formData.append('name', inputs.name);
         formData.append('price', inputs.price);
         formData.append('description', inputs.description);
-        formData.append('active', inputs.active ?? false);
+        formData.append('active', inputs.active ?? false); 
         formData.append('id', productId);
         if(setNewFile)
-            formData.append('image', inputs.image);
-        
+            formData.append('image', inputs.image); 
+        console.log(inputs)
+
         axios.put(`${serverPath}/products/${id}`, formData)
             .then(res => {
                 if(res.status === 200){
@@ -101,7 +102,7 @@ const Product = () => {
                 /> 
             </Form.Group>
             <Form.Group className="mb-3">
-                <Button variant="primary" type='submit' >Save Product</Button>
+                <Button variant="primary" type='submit' >Save Product</Button> 
             </Form.Group>
                   
         </Form>

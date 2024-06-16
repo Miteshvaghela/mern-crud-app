@@ -40,6 +40,17 @@ app.get('/products', async (req, res) => {
 
 app.delete('/products/:id', async (req, res) => {
     const { id } = req.params;
+    const oldProduct = await ProductModel.findById(id);
+    const oldImagePath = __dirname + '/uploads/' + oldProduct.image; 
+    try{
+        if(fs.existsSync(oldImagePath)){
+            await  fs.unlinkSync(oldImagePath, (err) => {
+                console.error(err);
+            })
+        }
+    }catch(err){
+        console.error(err)
+    }
     await ProductModel.findByIdAndDelete(id);
     res.status(200).json({message : 'Product deleted successfully.'});
 })
@@ -69,11 +80,17 @@ app.put('/products/:id', async (req, res) => {
     const { id } = req.params;
     const { name, description, price, active} = req.body; 
     const product = await ProductModel.findById(id);
+    const oldImage = product.image;
     if(product){
         product.name = name;
-        product.description = description;
         product.price = price;
-        product.active = active;
+
+        if(description){
+            product.description = description;
+        }
+        if(active){
+            product.active = active;
+        }
 
         // update image 
         if(req.files){
@@ -81,10 +98,18 @@ app.put('/products/:id', async (req, res) => {
             const imageName = new Date().getTime() + image.name;
             product.image = imageName;
             req.files.image.mv(__dirname + '/uploads/' + imageName);
-            console.log(__dirname + '/uploads/' + product.image, ' Unlink this');
-            await  fs.unlink(__dirname + '/uploads/' + product.image, (err) => {
-                console.error(err);
-            })
+            const oldImagePath = __dirname + '/uploads/' + oldImage; 
+
+            try{
+                if(fs.existsSync(oldImagePath)){
+                    await  fs.unlinkSync(oldImagePath, (err) => {
+                        console.error(err);
+                    })
+                }
+            }catch(err){
+                console.error(err)
+            }
+            
             
         }
 
