@@ -1,4 +1,4 @@
-# React + Vite
+# Vite + MERN stack (mongodb express react nodejs)
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
