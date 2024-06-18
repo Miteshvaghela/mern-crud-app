@@ -11,17 +11,13 @@ const Products = () => {
             .then(res => setProducts(res.data)) 
         }
         fetchPrdouct();
-    }, [products]) 
-
-
-    
+    }, [products])  
 
     const deleteProduct = async (id) => {
         const serverPath = import.meta.env.VITE_APP_SERVER;
         await fetch(`${serverPath}/products/${id}`, {
             method : 'DELETE'
-        })
-        fetchPrdouct();
+        }) 
         alert('Product deleted successfully');
     }
 
